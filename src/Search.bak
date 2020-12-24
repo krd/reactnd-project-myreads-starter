@@ -1,0 +1,55 @@
+import React from 'react'
+import * as BooksAPI from './BooksAPI'
+import Book from './Book'
+
+class Search extends React.Component {
+  state = {
+    query: '',
+    queryBooks: [],
+  }
+
+  onSearchChange = (query) => {
+    this.setState({
+      query: query.trim(),
+      queryBooks: [],
+    })
+    if (query.trim().length > 0) {
+      BooksAPI.search(query).then((books) => {
+        this.setState(() => ({ queryBooks: books }))
+      })
+    }
+  }
+
+  render() {
+    return (
+      <div>
+        <div className="search-books">
+          <div className="search-books-bar">
+            <button
+              className="close-search"
+              onClick={() => this.props.history.push('/')}
+            >
+              Close
+            </button>
+            <div className="search-books-input-wrapper">
+              <input
+                type="text"
+                placeholder="Search by title or author"
+                onChange={(e) => this.onSearchChange(e.target.value)}
+              />
+            </div>
+          </div>
+          <div className="search-books-results">
+            <ol className="books-grid">
+              {this.state.queryBooks instanceof Array &&
+                this.state.queryBooks.map((book) => (
+                  <Book key={book.id} book={book} />
+                ))}
+            </ol>
+          </div>
+        </div>
+      </div>
+    )
+  }
+}
+export default Search
