@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import Book from './Book'
 import { Link } from 'react-router-dom'
 
 function Search(props) {
-
-    const [queryResults] = useState(0)
 
     return (<div>
         <div className="search-books">

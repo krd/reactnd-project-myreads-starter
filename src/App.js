@@ -3,7 +3,8 @@ import * as BooksAPI from './BooksAPI'
 import './App.css'
 import Search from './Search'
 import BookShelf from './BookShelf'
-import { Route, Link } from 'react-router-dom'
+import { Route, Link, useHistory } from 'react-router-dom'
+import { createBrowserHistory } from 'history'
 
 class BooksApp extends React.Component {
   static CURRENTLY_READING_TITLE = 'Currently Reading'
@@ -17,7 +18,7 @@ class BooksApp extends React.Component {
 
 //   constructor(props) {
 //       super(props)
-//       this.history = createBrowserHistory()
+//       console.log(props.history)
 //   }
 
   state = {
@@ -65,12 +66,8 @@ class BooksApp extends React.Component {
   }
 
   onSearchClick = (e) => {
-      console.log(this.props)
-    // // () => this.history.push({ pathname: '/search' })
-    // console.log('on search click...')
-    // console.log(this.history.location)
-    // this.history.push('/search')
-    // console.log(this.history.location)
+     console.log(this.props.history)
+     this.props.history.push({ pathname: '/search' })
   }
 
   render() {
