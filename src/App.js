@@ -2,7 +2,7 @@ import React from 'react'
 import * as BooksAPI from './BooksAPI'
 import './App.css'
 import Search from './Search'
-import BookShelf from './BookShelf'
+import Shelf from './Shelf'
 import { Route } from 'react-router-dom'
 import { withRouter } from 'react-router'
 
@@ -43,6 +43,7 @@ class App extends React.Component {
     const books = this.state.books
     books.push(book)
     this.setState({ ...this.state, books })
+    // I'm not certain that redirect to main bookshelf page is required. If not, remove next line
     this.props.history.push('/')
   }
 
@@ -95,17 +96,17 @@ class App extends React.Component {
             <div className="list-books-title">
               <h1>MyReads</h1>
             </div>
-            <BookShelf
+            <Shelf
               books={currentlyReading}
               bookshelfTitle={'Currently Reading'}
               onMoveBook={this.moveBook}
             />
-            <BookShelf
+            <Shelf
               books={wantToRead}
               bookshelfTitle={'Want to Read'}
               onMoveBook={this.moveBook}
             />
-            <BookShelf
+            <Shelf
               books={read}
               bookshelfTitle={'Read'}
               onMoveBook={this.moveBook}
