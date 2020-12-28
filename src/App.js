@@ -3,10 +3,10 @@ import * as BooksAPI from './BooksAPI'
 import './App.css'
 import Search from './Search'
 import BookShelf from './BookShelf'
-import { Route, Link, useHistory } from 'react-router-dom'
-import { createBrowserHistory } from 'history'
+import { Route } from 'react-router-dom'
+import { withRouter } from 'react-router'
 
-class BooksApp extends React.Component {
+class App extends React.Component {
   static CURRENTLY_READING_TITLE = 'Currently Reading'
   static CURRENTLY_READING = 'currentlyreading'
   static WANT_TO_READ_TITLE = 'Want to Read'
@@ -15,11 +15,6 @@ class BooksApp extends React.Component {
   static READ = 'read'
   static NONE_TITLE = 'None'
   static NONE = 'none'
-
-//   constructor(props) {
-//       super(props)
-//       console.log(props.history)
-//   }
 
   state = {
     books: [],
@@ -40,7 +35,7 @@ class BooksApp extends React.Component {
       }
       return b
     })
-    this.setState({ books })
+    this.setState({ ...this.state, books })
   }
 
   moveSearchBook = (e, book) => {
@@ -48,6 +43,7 @@ class BooksApp extends React.Component {
     const books = this.state.books
     books.push(book)
     this.setState({ ...this.state, books })
+    this.props.history.push('/')
   }
 
   onSearchChange = (query) => {
@@ -58,16 +54,18 @@ class BooksApp extends React.Component {
       BooksAPI.search(query).then((books) => {
         books !== undefined && this.setState(() => ({ queryBooks: books }))
       })
+    } else {
+      this.setState(() => ({ ...this.state, queryBooks: [], query: '' }))
     }
   }
 
-  onSearchEndClick = (e) => {
-
+  onBackToShelves = (e) => {
+    this.setState(() => ({ ...this.state, queryBooks: [], query: '' }))
   }
 
-  onSearchClick = (e) => {
-     console.log(this.props.history)
-     this.props.history.push({ pathname: '/search' })
+  onOpenSearch = () => {
+    this.setState({...this.state, queryBooks: []})
+    this.props.history.push('/search')
   }
 
   render() {
@@ -81,56 +79,45 @@ class BooksApp extends React.Component {
 
     return (
       <div className="app">
-        <div className="list-books">
-          <div className="list-books-title">
-            <h1>MyReads</h1>
-          </div>
-          <Route
-            exact
-            path="/"
-            render={({ history }) => (
-              <div>
-                <BookShelf
-                  books={currentlyReading}
-                  bookshelfTitle={'Currently Reading'}
-                  onMoveBook={this.moveBook}
-                />
-                <BookShelf
-                  books={wantToRead}
-                  bookshelfTitle={'Want to Read'}
-                  onMoveBook={this.moveBook}
-                />
-                <BookShelf
-                  books={read}
-                  bookshelfTitle={'Read'}
-                  onMoveBook={this.moveBook}
-                />
-              </div>
-            )}
-          />
-        </div>
-        <Route
-          path="/search"
-          render={() => (
+        <div>
+          <Route path="/search">
             <Search
               onSearchChange={this.onSearchChange}
               query={this.state.query}
               queryBooks={this.state.queryBooks}
               onMoveBook={this.moveSearchBook}
+              onBackToShelves={this.onBackToShelves}
             />
-          )}
-        />
-        <div className="open-search">
-          <button
-            onClick={this.onSearchClick}
-          >
-            Add a book
-          </button>
-          <Link to="/search">Add</Link>
+          </Route>
+        </div>
+        <div className="list-books">
+          <Route exact path="/">
+            <div className="list-books-title">
+              <h1>MyReads</h1>
+            </div>
+            <BookShelf
+              books={currentlyReading}
+              bookshelfTitle={'Currently Reading'}
+              onMoveBook={this.moveBook}
+            />
+            <BookShelf
+              books={wantToRead}
+              bookshelfTitle={'Want to Read'}
+              onMoveBook={this.moveBook}
+            />
+            <BookShelf
+              books={read}
+              bookshelfTitle={'Read'}
+              onMoveBook={this.moveBook}
+            />
+            <div className="open-search">
+              <button onClick={this.onOpenSearch}>Add a book</button>
+            </div>
+          </Route>
         </div>
       </div>
     )
   }
 }
 
-export default BooksApp
+export default withRouter(App)

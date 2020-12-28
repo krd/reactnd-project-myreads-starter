@@ -1,6 +1,6 @@
 import React from 'react'
 import Book from './Book'
-import { Link } from 'react-router-dom'
+import { withRouter } from 'react-router'
 
 function Search(props) {
 
@@ -13,7 +13,6 @@ function Search(props) {
             >
               Close
             </button>
-            <Link to='/' >Back</Link>
             <div className="search-books-input-wrapper">
               <input
                 type="text"
@@ -33,4 +32,4 @@ function Search(props) {
         </div>
       </div>)
 }
-export default Search
+export default withRouter(Search)
