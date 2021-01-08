@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import * as BooksAPI from './BooksAPI'
 import './App.css'
 import Search from './Search'
@@ -6,7 +6,7 @@ import Shelf from './Shelf'
 import { Route } from 'react-router-dom'
 import { withRouter } from 'react-router'
 
-class App extends React.Component {
+class App extends Component {
   static CURRENTLY_READING_TITLE = 'Currently Reading'
   static CURRENTLY_READING = 'currentlyreading'
   static WANT_TO_READ_TITLE = 'Want to Read'
@@ -28,23 +28,19 @@ class App extends React.Component {
     })
   }
 
-  moveBook = (e, book) => {
+  updateBookShelves(book, shelf) {
     const books = this.state.books.map((b) => {
       if (b.title === book.title) {
-        return { ...b, shelf: e.target.value }
+        return { ...b, shelf: shelf }
       }
       return b
     })
     this.setState({ ...this.state, books })
   }
 
-  moveSearchBook = (e, book) => {
-    book.shelf = e.target.value
-    const books = this.state.books
-    books.push(book)
-    this.setState({ ...this.state, books })
-    // I'm not certain that redirect to main bookshelf page is required. If not, remove next line
-    this.props.history.push('/')
+  moveBook = (e, book) => {
+    BooksAPI.update(book, e.target.value)
+    this.updateBookShelves(book, e.target.value)
   }
 
   onSearchChange = (query) => {
@@ -60,12 +56,8 @@ class App extends React.Component {
     }
   }
 
-  onBackToShelves = (e) => {
-    this.setState(() => ({ ...this.state, queryBooks: [], query: '' }))
-  }
-
   onOpenSearch = () => {
-    this.setState({...this.state, queryBooks: []})
+    this.setState({ ...this.state, queryBooks: [] })
     this.props.history.push('/search')
   }
 
@@ -86,8 +78,7 @@ class App extends React.Component {
               onSearchChange={this.onSearchChange}
               query={this.state.query}
               queryBooks={this.state.queryBooks}
-              onMoveBook={this.moveSearchBook}
-              onBackToShelves={this.onBackToShelves}
+              onMoveBook={this.moveBook}
             />
           </Route>
         </div>

@@ -1,7 +1,8 @@
 import React from 'react'
 
-export default function Book(props) {
+function Book(props) {
   const { book, onMoveBook } = props
+  console.log(book)
   const shelf = book.shelf
   const imageLink =
     book.imageLinks !== undefined ? book.imageLinks.thumbnail : ''
@@ -41,3 +42,4 @@ export default function Book(props) {
     </div>
   )
 }
+export default Book
