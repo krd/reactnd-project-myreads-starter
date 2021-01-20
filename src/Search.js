@@ -29,6 +29,7 @@ function Search(props) {
                   key={book.id}
                   book={book}
                   onMoveBook={(e) => props.onMoveBook(e, book)}
+                  getBookShelf={props.getBookShelf}
                 />
               ))}
           </ol>

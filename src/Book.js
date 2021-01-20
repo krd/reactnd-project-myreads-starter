@@ -1,9 +1,7 @@
 import React from 'react'
 
 function Book(props) {
-  const { book, onMoveBook } = props
-  console.log(book)
-  const shelf = book.shelf
+  const { book, onMoveBook, getBookShelf } = props
   const imageLink =
     book.imageLinks !== undefined ? book.imageLinks.thumbnail : ''
 
@@ -21,7 +19,7 @@ function Book(props) {
           />
           <div className="book-shelf-changer">
             <select
-              value={shelf !== undefined ? shelf : 'none'}
+              value={getBookShelf(book)}
               onChange={(e) => onMoveBook(e, book)}
             >
               <option value="move" disabled>

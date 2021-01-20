@@ -2,7 +2,7 @@ import React from 'react'
 import Book from './Book'
 
 function Shelf(props) {
-  const { books, bookshelfTitle, onMoveBook } = props
+  const { books, bookshelfTitle, onMoveBook, getBookShelf } = props
 
   return (
     <div>
@@ -18,6 +18,7 @@ function Shelf(props) {
                       key={book.id}
                       book={book}
                       onMoveBook={onMoveBook}
+                      getBookShelf={getBookShelf}
                     />
                   ))}
                 </ol>
