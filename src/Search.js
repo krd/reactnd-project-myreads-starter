@@ -1,6 +1,6 @@
-import React from 'react'
-import Book from './Book'
-import { withRouter } from 'react-router'
+import React from 'react';
+import Book from './Book';
+import { withRouter } from 'react-router';
 
 function Search(props) {
   return (
@@ -36,6 +36,6 @@ function Search(props) {
         </div>
       </div>
     </div>
-  )
+  );
 }
-export default withRouter(Search)
+export default withRouter(Search);

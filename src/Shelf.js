@@ -1,8 +1,8 @@
-import React from 'react'
-import Book from './Book'
+import React from 'react';
+import Book from './Book';
 
 function Shelf(props) {
-  const { books, bookshelfTitle, onMoveBook, getBookShelf } = props
+  const { books, bookshelfTitle, onMoveBook, getBookShelf } = props;
 
   return (
     <div>
@@ -28,6 +28,6 @@ function Shelf(props) {
         </div>
       </div>
     </div>
-  )
+  );
 }
-export default Shelf
+export default Shelf;

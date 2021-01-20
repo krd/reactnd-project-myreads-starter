@@ -1,9 +1,9 @@
-import React from 'react'
+import React from 'react';
 
 function Book(props) {
-  const { book, onMoveBook, getBookShelf } = props
+  const { book, onMoveBook, getBookShelf } = props;
   const imageLink =
-    book.imageLinks !== undefined ? book.imageLinks.thumbnail : ''
+    book.imageLinks !== undefined ? book.imageLinks.thumbnail : '';
 
   return (
     <div>
@@ -38,6 +38,6 @@ function Book(props) {
         </div>
       </div>
     </div>
-  )
+  );
 }
-export default Book
+export default Book;
