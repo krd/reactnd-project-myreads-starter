@@ -1,18 +1,16 @@
 import React from 'react';
 import Book from './Book';
 import { withRouter } from 'react-router';
+import { Link } from 'react-router-dom';
 
 function Search(props) {
   return (
     <div>
       <div className="search-books">
         <div className="search-books-bar">
-          <button
-            className="close-search"
-            onClick={() => props.history.push('/')}
-          >
-            Close
-          </button>
+          <Link className='close-search' to='/'>
+              Close
+          </Link>
           <div className="search-books-input-wrapper">
             <input
               type="text"

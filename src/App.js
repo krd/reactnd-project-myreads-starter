@@ -3,18 +3,11 @@ import * as BooksAPI from './BooksAPI';
 import './App.css';
 import Search from './Search';
 import Shelf from './Shelf';
-import { Route } from 'react-router-dom';
+import { Route, Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
+import { NONE_ID, READ_ID, CURRENTLY_READING_ID, WANT_TO_READ_ID} from './Constants';
 
 class App extends Component {
-  static CURRENTLY_READING_TITLE = 'Currently Reading';
-  static CURRENTLY_READING = 'currentlyreading';
-  static WANT_TO_READ_TITLE = 'Want to Read';
-  static WANT_TO_READ = 'wanttoread';
-  static READ_TITLE = 'Read';
-  static READ = 'read';
-  static NONE_TITLE = 'None';
-  static NONE = 'none';
 
   state = {
     books: [],
@@ -42,7 +35,7 @@ class App extends Component {
    */
   getBookShelf = (selectedBook) => {
     const book = this.state.books.find((book) => book.id === selectedBook.id);
-    return book !== undefined && book.shelf !== undefined ? book.shelf : 'none';
+    return book !== undefined && book.shelf !== undefined ? book.shelf : NONE_ID;
   };
 
   /**
@@ -98,12 +91,12 @@ class App extends Component {
 
   render() {
     let currentlyReading = this.state.books.filter(
-      (book) => book.shelf === 'currentlyReading'
+      (book) => book.shelf === CURRENTLY_READING_ID
     );
     let wantToRead = this.state.books.filter(
-      (book) => book.shelf === 'wantToRead'
+      (book) => book.shelf === WANT_TO_READ_ID
     );
-    let read = this.state.books.filter((book) => book.shelf === 'read');
+    let read = this.state.books.filter((book) => book.shelf === READ_ID);
 
     return (
       <div className="app">
@@ -142,8 +135,12 @@ class App extends Component {
               onMoveBook={this.moveBook}
               getBookShelf={this.getBookShelf}
             />
-            <div className="open-search">
-              <button onClick={this.onOpenSearch}>Add a book</button>
+            <div>
+              {/* <button onClick={this.onOpenSearch}>Add a book</button> */}
+              <Link to='/search' className='open-search'>
+                  Add a book
+              </Link>
+
             </div>
           </Route>
         </div>
