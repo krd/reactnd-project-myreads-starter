@@ -1,9 +1,11 @@
 import React from 'react';
+import imageNotAvailable from './images/imageNotAvailableCropped.png'
 
 function Book(props) {
+    
   const { book, onMoveBook, getBookShelf } = props;
   const imageLink =
-    book.imageLinks !== undefined ? book.imageLinks.thumbnail : '';
+    book.imageLinks !== undefined ? book.imageLinks.thumbnail : imageNotAvailable;
 
   return (
     <div>
