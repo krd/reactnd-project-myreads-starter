@@ -60,7 +60,6 @@ class App extends Component {
    * @param {Object} book The book object being moved
    */
   moveBook = (e, book) => {
-    console.log('update book')
     BooksAPI.update(book, e.target.value);
     this.updateBookShelves(book, e.target.value);
     this.getBooks();
