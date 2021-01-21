@@ -91,7 +91,6 @@ class App extends Component {
   };
 
   render() {
-    
     return (
       <div className="app">
         <div>
@@ -102,7 +101,6 @@ class App extends Component {
               queryBooks={this.state.queryBooks}
               onMoveBook={this.moveBook}
               getBookShelf={this.getBookShelf}
-              getAllBooks={this.getAllBooks}
             />
           </Route>
         </div>
@@ -112,15 +110,18 @@ class App extends Component {
               <h1>MyReads</h1>
             </div>
             {SHELVES.map((shelf) => {
-              console.log(shelf);
-              shelf.books = this.state.books.filter((book) => book.shelf === shelf.id);
-              return <Shelf
-                key={shelf.id}
-                books={shelf.books}
-                bookshelfTitle={shelf.title}
-                onMoveBook={this.moveBook}
-                getBookShelf={this.getBookShelf}
-              />
+              const shelfBooks = this.state.books.filter(
+                (book) => book.shelf === shelf.id
+              );
+              return (
+                <Shelf
+                  key={shelf.id}
+                  books={shelfBooks}
+                  bookshelfTitle={shelf.title}
+                  onMoveBook={this.moveBook}
+                  getBookShelf={this.getBookShelf}
+                />
+              );
             })}
             <div className="open-search">
               <button onClick={this.onOpenSearch}>Add a book</button>

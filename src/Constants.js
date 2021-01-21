@@ -9,17 +9,14 @@ export const NONE_ID = 'none';
 export const SHELVES = [
   {
     title: CURRENTLY_READING_TITLE,
-    id: CURRENTLY_READING_ID,
-    books: []
+    id: CURRENTLY_READING_ID
   },
   {
     title: WANT_TO_READ_TITLE,
-    id: WANT_TO_READ_ID,
-    books: []
+    id: WANT_TO_READ_ID
   },
   {
     title: READ_TITLE,
-    id: READ_ID,
-    books: []
+    id: READ_ID
   }
 ];
