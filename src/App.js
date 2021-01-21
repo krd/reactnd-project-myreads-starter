@@ -3,12 +3,11 @@ import * as BooksAPI from './BooksAPI';
 import './App.css';
 import Search from './Search';
 import Shelf from './Shelf';
-import { Route, Link } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import { withRouter } from 'react-router';
-import { NONE_ID, READ_ID, CURRENTLY_READING_ID, WANT_TO_READ_ID} from './Constants';
+import { NONE_ID, SHELVES } from './Constants';
 
 class App extends Component {
-
   state = {
     books: [],
     query: '',
@@ -35,7 +34,9 @@ class App extends Component {
    */
   getBookShelf = (selectedBook) => {
     const book = this.state.books.find((book) => book.id === selectedBook.id);
-    return book !== undefined && book.shelf !== undefined ? book.shelf : NONE_ID;
+    return book !== undefined && book.shelf !== undefined
+      ? book.shelf
+      : NONE_ID;
   };
 
   /**
@@ -90,14 +91,7 @@ class App extends Component {
   };
 
   render() {
-    let currentlyReading = this.state.books.filter(
-      (book) => book.shelf === CURRENTLY_READING_ID
-    );
-    let wantToRead = this.state.books.filter(
-      (book) => book.shelf === WANT_TO_READ_ID
-    );
-    let read = this.state.books.filter((book) => book.shelf === READ_ID);
-
+    
     return (
       <div className="app">
         <div>
@@ -117,30 +111,19 @@ class App extends Component {
             <div className="list-books-title">
               <h1>MyReads</h1>
             </div>
-            <Shelf
-              books={currentlyReading}
-              bookshelfTitle={'Currently Reading'}
-              onMoveBook={this.moveBook}
-              getBookShelf={this.getBookShelf}
-            />
-            <Shelf
-              books={wantToRead}
-              bookshelfTitle={'Want to Read'}
-              onMoveBook={this.moveBook}
-              getBookShelf={this.getBookShelf}
-            />
-            <Shelf
-              books={read}
-              bookshelfTitle={'Read'}
-              onMoveBook={this.moveBook}
-              getBookShelf={this.getBookShelf}
-            />
-            <div>
-              {/* <button onClick={this.onOpenSearch}>Add a book</button> */}
-              <Link to='/search' className='open-search'>
-                  Add a book
-              </Link>
-
+            {SHELVES.map((shelf) => {
+              console.log(shelf);
+              shelf.books = this.state.books.filter((book) => book.shelf === shelf.id);
+              return <Shelf
+                key={shelf.id}
+                books={shelf.books}
+                bookshelfTitle={shelf.title}
+                onMoveBook={this.moveBook}
+                getBookShelf={this.getBookShelf}
+              />
+            })}
+            <div className="open-search">
+              <button onClick={this.onOpenSearch}>Add a book</button>
             </div>
           </Route>
         </div>
